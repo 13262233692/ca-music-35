@@ -1,0 +1,179 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8xk7y9q3w7e2"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/ca_visualizer.gd" id="2_cavisualizer"]
+[ext_resource type="Script" path="res://scripts/cellular_automaton.gd" id="3_ca"]
+[ext_resource type="Script" path="res://scripts/music_generator.gd" id="4_music"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.2, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.3, 0.5, 0.8, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="MainContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="CAVisualizer" type="Control" parent="MainContainer"]
+layout_mode = 2
+script = ExtResource("2_cavisualizer")
+
+[node name="ControlPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -180.0
+offset_right = 500.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="ControlPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RuleContainer" type="VBoxContainer" parent="ControlPanel/VBoxContainer/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RuleLabel" type="Label" parent="ControlPanel/VBoxContainer/TopRow/RuleContainer"]
+layout_mode = 2
+text = "Rule 30 (Chaos)"
+horizontal_alignment = 1
+
+[node name="RuleSlider" type="HSlider" parent="ControlPanel/VBoxContainer/TopRow/RuleContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 255.0
+value = 30.0
+step = 1.0
+
+[node name="SpeedContainer" type="VBoxContainer" parent="ControlPanel/VBoxContainer/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpeedLabel" type="Label" parent="ControlPanel/VBoxContainer/TopRow/SpeedContainer"]
+layout_mode = 2
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="ControlPanel/VBoxContainer/TopRow/SpeedContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 5.0
+value = 2.5
+step = 0.1
+
+[node name="GenerationLabel" type="Label" parent="ControlPanel/VBoxContainer/TopRow"]
+layout_mode = 2
+text = "Generation: 0"
+vertical_alignment = 1
+
+[node name="MiddleRow" type="HBoxContainer" parent="ControlPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RuleModeLabel" type="Label" parent="ControlPanel/VBoxContainer/MiddleRow"]
+layout_mode = 2
+text = "Mode:"
+vertical_alignment = 1
+
+[node name="RuleModeOption" type="OptionButton" parent="ControlPanel/VBoxContainer/MiddleRow"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="SecondaryRuleContainer" type="VBoxContainer" parent="ControlPanel/VBoxContainer/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+visible = false
+
+[node name="SecondaryRuleLabel" type="Label" parent="ControlPanel/VBoxContainer/MiddleRow/SecondaryRuleContainer"]
+layout_mode = 2
+text = "Secondary Rule"
+horizontal_alignment = 1
+
+[node name="SecondaryRuleSlider" type="HSlider" parent="ControlPanel/VBoxContainer/MiddleRow/SecondaryRuleContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 255.0
+value = 90.0
+step = 1.0
+
+[node name="BottomRow" type="HBoxContainer" parent="ControlPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ScaleLabel" type="Label" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+text = "Scale:"
+vertical_alignment = 1
+
+[node name="ScaleOption" type="OptionButton" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="PauseButton" type="Button" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+text = "Pause"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="ResetButton" type="Button" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+text = "Reset"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="RandomRuleButton" type="Button" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+text = "Random"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="MuteButton" type="Button" parent="ControlPanel/VBoxContainer/BottomRow"]
+layout_mode = 2
+text = "Mute"
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+
+[node name="HintLabel" type="Label" parent="ControlPanel/VBoxContainer"]
+layout_mode = 2
+text = "Click/drag on grid to flip cells • Space: Pause • R: Reset"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+
+[node name="CellularAutomaton" type="Node" parent="."]
+script = ExtResource("3_ca")
+
+[node name="MusicGenerator" type="Node" parent="."]
+script = ExtResource("4_music")
